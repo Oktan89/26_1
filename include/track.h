@@ -11,10 +11,10 @@ class Track{
     std::tm creationDate{}; 
     std::size_t duration;
     std::time_t endPlay;
+    friend void Player::play(Track &track);
    
 public:
     Track();
     static void initRand();
-    friend void Player::play(Track &track);
     void show();
 };
