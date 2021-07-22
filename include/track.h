@@ -3,11 +3,15 @@
 #include <ctime>
 
 class Track{
+    static int id;
     std::string titleSong;
-    std::time_t creationDate; 
+    std::tm creationDate{}; 
     std::size_t duration;
+    std::time_t endPlay;
+   
 public:
     Track();
-    Track(const std::string &titleSong, const std::size_t duration);
-    ~Track();
+    static void initRand();
+    friend void play(Track& track);
+    void show();
 };
