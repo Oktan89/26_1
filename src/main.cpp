@@ -3,6 +3,7 @@
 #include "player.h"
 
 int main(){
+    Track::initRand();
     Track track, track2;
     Player player;
     player.play(track);
