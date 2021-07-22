@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
 #include <ctime>
+#include "player.h"
+
+class Player;
 
 class Track{
     static int id;
@@ -12,6 +15,6 @@ class Track{
 public:
     Track();
     static void initRand();
-    friend void play(Track& track);
+    friend void Player::play(Track &track);
     void show();
 };
