@@ -1,7 +1,7 @@
-#include "track.h"
 #include <iostream>
 #include <iomanip>
 #include <cstdlib>
+#include "track.h"
 
 int Track::id = 1;
 

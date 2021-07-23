@@ -3,7 +3,6 @@
 #include <ctime>
 #include "player.h"
 
-class Player;
 
 class Track{
     static int id;
