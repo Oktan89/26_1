@@ -1,13 +1,18 @@
 #include <iostream>
-#include "track.h"
 #include "player.h"
+#include "track.h"
+
 
 int main(){
-    Track::initRand();
-    Track track, track2;
-    Player player;
-    player.play(track);
-    player.play(track2);
-    
+   Player player;
+   Track::initRand();
+
+   player.loadPlaylists(3);
+   std::string answer;
+   while(answer!= "exit"){
+       std::cin>>answer;
+       player.play(1);
+   }
+   
     return 0;
 }

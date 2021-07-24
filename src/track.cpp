@@ -3,11 +3,11 @@
 #include <cstdlib>
 #include "track.h"
 
-int Track::id = 1;
+int Track::id{1};
 
-Track::Track(){
+void Track::initSong(){
     
-    titleSong = "soung_" + std::to_string(id++)+".mp3";
+    titleSong = "song#" + std::to_string(id++)+".mp3";
     std::time_t now = time(nullptr);
     creationDate =  *std::localtime(&now);
     duration = 120 + std::rand()%240;
@@ -15,9 +15,14 @@ Track::Track(){
 }
 
 void Track::initRand(){
+
     std::srand(time(nullptr));
 }
 
-void Track::show(){
-    std::cout<<titleSong<<" "<<duration<<" "<<std::put_time(&creationDate, "%c");
+
+std::ostream& operator<< (std::ostream& out, const Track &track){
+
+    std::cout<<track.titleSong<<" duration seconds:["<<track.duration<<"] "<<std::put_time(&track.creationDate, "%c");
+
+    return out;
 }

@@ -1,8 +1,9 @@
 #pragma once
 #include <string>
 #include <ctime>
-#include "player.h"
+#include <ostream>
 
+class Player;
 
 class Track{
     static int id;
@@ -10,10 +11,9 @@ class Track{
     std::tm creationDate{}; 
     std::size_t duration;
     std::time_t endPlay;
-    friend void Player::play(Track &track);
-    
+    friend Player;
+    friend std::ostream& operator<< (std::ostream& out, const Track &track);
 public:
-    Track();
+    void initSong();
     static void initRand();
-    void show();
 };
