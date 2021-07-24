@@ -64,6 +64,7 @@ void Player::play(int numSong){
             case Status::STOP:
                 playlists[numSong]->endPlay = playlists[numSong]->duration + std::time(nullptr);
                 status = PLAY;
+                indexSong = numSong;
                 print();
             break;
             case Status::PAUSE:
@@ -77,4 +78,20 @@ void Player::play(int numSong){
 
     }
     
+}
+
+void Player::stop(){
+    if(status == PLAY){
+        playlists[indexSong]->endPlay = 0;
+        status = STOP;
+        
+    }
+    print();
+}
+
+void Player::next(){
+    stop();
+    indexSong = rand()%playlists.size()+1;
+    play(indexSong);
+
 }
