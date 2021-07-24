@@ -9,14 +9,19 @@ int main(){
 
    player.loadPlaylists();
    std::string answer;
+   std::cout<<"Enter idex song: ";
+   std::cin>>answer;
+   player.setIndexSong(std::stoi(answer));
    while(answer!= "exit"){
        std::cin>>answer;
-       if(answer == "p"){
-           player.play(1);///???????
-       }else if(answer == "s"){
+       if(answer == "play"){
+           player.play();
+       }else if(answer == "stop"){
            player.stop();
-       }else if(answer == "n"){
+       }else if(answer == "next"){
            player.next();
+       }else if(answer == "pause"){
+           player.pause();
        }
        
    }

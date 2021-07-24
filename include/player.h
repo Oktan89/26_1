@@ -18,8 +18,9 @@ class Player{
 public:
 
     void loadPlaylists(int size = 3);
-    void play(int numSong);
-    void stop();
+    void setIndexSong(int numSong);
+    void play();
+    void stop(bool print = true);
     void pause();
     void next();
     ~Player();

@@ -36,62 +36,84 @@ Player::~Player(){
     }
 }
 void Player::print(){
+
+#if defined(__unix__) || defined(__APPLE__)
+    system("clear");
+#elif defined(_WIN32) || defined(_WIN64)
+    system("cls");
+#endif 
+    std::string _status;
     
     for(int i = 0; i < playlists.size(); ++i){
-       std::cout<<((playlists[i]->endPlay)? "Play " : "Stop ")
-            <<*playlists[i]
+        if(status == PAUSE){
+            _status = (playlists[i]->endPlay)? "Pause " : "Stop ";
+            playlists[indexSong]->endPlay -= std::time(nullptr);
+            playlists[indexSong]->endPlay += std::time(nullptr);
+        }else{
+            _status = (playlists[i]->endPlay)? "Play " : "Stop ";
+        }
+       std::cout<<_status<<*playlists[i]
             <<((playlists[i]->endPlay)? " remaining playing time:["+ std::to_string(playlists[i]->endPlay - std::time(nullptr)) + "]" : " ")
             <<std::endl;
     }
 }
 
-void Player::play(int numSong){
+void Player::setIndexSong(int numSong){
     --numSong;
     if(numSong >= 0 && numSong < playlists.size())
     {
-        switch(status){
-            case Status::PLAY:
-                if(playlists[numSong]->endPlay <= std::time(nullptr)){
-                    status = STOP;
-                    playlists[numSong]->endPlay = 0;
-                    print();
-                }else{
-                    
-                    print();
-                }
-                
-            break;
-            case Status::STOP:
-                playlists[numSong]->endPlay = playlists[numSong]->duration + std::time(nullptr);
-                status = PLAY;
-                indexSong = numSong;
-                print();
-            break;
-            case Status::PAUSE:
-            break;
-        };
-        
-
+        indexSong = numSong;
     }else{
 
         std::cout<<"song#"<<++numSong<<" not found"<<std::endl;
 
     }
-    
 }
 
-void Player::stop(){
+void Player::play(){
+    
+        switch(status){
+            case Status::PLAY:
+                if(playlists[indexSong]->endPlay <= std::time(nullptr)){
+                    status = STOP;
+                    playlists[indexSong]->endPlay = 0;
+                }
+            break;
+            case Status::STOP:
+                playlists[indexSong]->endPlay = playlists[indexSong]->duration + std::time(nullptr);
+                status = PLAY;
+               
+            break;
+            case Status::PAUSE:
+                playlists[indexSong]->endPlay -= std::time(nullptr);
+                playlists[indexSong]->endPlay += std::time(nullptr);
+                status = PLAY;
+                
+            break;
+        };
+        print();
+}
+
+void Player::stop(bool show){
     if(status == PLAY){
         playlists[indexSong]->endPlay = 0;
         status = STOP;
         
     }
-    print();
+    if(show) print();
 }
 
 void Player::next(){
-    stop();
-    indexSong = rand()%playlists.size()+1;
-    play(indexSong);
+    stop(false);
+    indexSong = rand()%playlists.size();
+    play();
+}
 
+void Player::pause(){
+    if(status == PLAY){
+        status = PAUSE;
+    }
+    playlists[indexSong]->endPlay -= std::time(nullptr);
+    playlists[indexSong]->endPlay += std::time(nullptr);
+    print();
 }
