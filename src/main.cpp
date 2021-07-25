@@ -7,12 +7,27 @@ int main(){
    Player player;
    Track::initRand();
 
-   player.loadPlaylists();
+   int size = player.loadPlaylists();
+   int index = 0;
+      
+   do{
+        
+        std::cout<<"Enter idex song#x: ";
+        std::cin>>index;
+        if(std::cin.fail()){
+            std::cin.clear();
+            std::cin.ignore(INT16_MAX, '\n');
+            std::cout<<"Error index"<<std::endl;
+        }
+      
+   }while(index <= 0 || index > size);
+
+
+   player.setIndexSong(index);
    std::string answer;
-   std::cout<<"Enter idex song: ";
-   std::cin>>answer;
-   player.setIndexSong(std::stoi(answer));
-   while(answer!= "exit"){
+   
+   do{
+       std::cout<<"Press command: [play] [stop] [pause] [next] [exit]"<<std::endl;
        std::cin>>answer;
        if(answer == "play"){
            player.play();
@@ -24,7 +39,7 @@ int main(){
            player.pause();
        }
        
-   }
+   }while(answer!= "exit");
    
     return 0;
 }

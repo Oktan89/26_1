@@ -17,6 +17,7 @@ void Track::initSong(){
 void Track::initRand(){
 
     std::srand(time(nullptr));
+
 }
 
 

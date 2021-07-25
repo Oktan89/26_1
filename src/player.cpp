@@ -5,7 +5,7 @@
 #include "track.h"
 
 
-void Player::loadPlaylists(int size){
+int Player::loadPlaylists(int size){
 
     for(int i = 0; i < size; ++i){
         std::cout<<"Load playlists...";
@@ -23,6 +23,7 @@ void Player::loadPlaylists(int size){
 
         }
     }
+    return playlists.size();
 }
 
 Player::~Player(){
@@ -55,6 +56,7 @@ void Player::print(){
             <<((playlists[i]->endPlay)? " remaining playing time:["+ std::to_string(playlists[i]->endPlay - std::time(nullptr)) + "]" : " ")
             <<std::endl;
     }
+    //std::cout<<"Press command: [play] [stop] [pause] [next] [exit]"<<std::endl;
 }
 
 void Player::setIndexSong(int numSong){
@@ -103,6 +105,7 @@ void Player::stop(bool show){
 
 void Player::next(){
     stop(false);
+    rand();
     indexSong = rand()%playlists.size();
     play();
 }

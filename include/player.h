@@ -18,7 +18,7 @@ class Player{
 
 public:
 
-    void loadPlaylists(int size = 3);
+    int loadPlaylists(int size = 3);
     void setIndexSong(int numSong);
     void play();
     void stop(bool print = true);
