@@ -47,8 +47,7 @@ void Player::print(){
     for(int i = 0; i < playlists.size(); ++i){
         if(status == PAUSE){
             _status = (playlists[i]->endPlay)? "Pause " : "Stop ";
-            playlists[indexSong]->endPlay -= std::time(nullptr);
-            playlists[indexSong]->endPlay += std::time(nullptr);
+
         }else{
             _status = (playlists[i]->endPlay)? "Play " : "Stop ";
         }
@@ -85,9 +84,8 @@ void Player::play(){
                
             break;
             case Status::PAUSE:
-                playlists[indexSong]->endPlay -= std::time(nullptr);
-                playlists[indexSong]->endPlay += std::time(nullptr);
-                status = PLAY;
+     
+            status = PLAY;
                 
             break;
         };
@@ -95,7 +93,7 @@ void Player::play(){
 }
 
 void Player::stop(bool show){
-    if(status == PLAY){
+    if(status == PLAY || status == PAUSE){
         playlists[indexSong]->endPlay = 0;
         status = STOP;
         
@@ -111,9 +109,15 @@ void Player::next(){
 
 void Player::pause(){
     if(status == PLAY){
+        duration_paus = playlists[indexSong]->endPlay - std::time(nullptr);
+        playlists[indexSong]->endPlay = duration_paus + std::time(nullptr);
+        
         status = PAUSE;
+    }else if(status == PAUSE){
+        
+        playlists[indexSong]->endPlay = duration_paus + std::time(nullptr);
+
     }
-    playlists[indexSong]->endPlay -= std::time(nullptr);
-    playlists[indexSong]->endPlay += std::time(nullptr);
-    print();
+    
+   print();
 }

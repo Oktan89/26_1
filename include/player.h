@@ -13,6 +13,7 @@ class Player{
     Status status{Status::STOP};
     std::vector<Track*> playlists;
     int indexSong{0};
+    long int duration_paus;
     void print();
 
 public:
